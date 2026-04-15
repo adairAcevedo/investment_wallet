@@ -21,8 +21,8 @@ defmodule InvestmentWallet.Core.Wallet do
   @typedoc "Wallet struct type."
   @type t :: %{
     name: String.t(),
-    assigned_stocks: [Stock.t()],
-    wish_stocks: [WishStock.t()],
+    assigned_stocks: [InvestmentWallet.Core.Stock.t()],
+    wish_stocks: [InvestmentWallet.Core.WishStock.t()],
     to_sell_stocks: [entry()],
     to_buy_stocks: [entry()],
     balance_cents: integer()
