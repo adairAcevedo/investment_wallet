@@ -17,7 +17,7 @@ defmodule InvestmentWalletWeb.Router do
   scope "/api", InvestmentWalletWeb do
     pipe_through :api
 
-    post "/rebalance", RebalanceController, :rebalance
+    post "/rebalance", WalletController, :rebalance
   end
 
   scope "/", InvestmentWalletWeb do

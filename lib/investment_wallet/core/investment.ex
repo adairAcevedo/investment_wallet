@@ -175,20 +175,25 @@ defmodule InvestmentWallet.Core.Investment do
     ]
   end
 
-  def wallet_from_map(params) do
-    %Wallet{
-      name: params["name"],
-      assigned_stocks: parse_stocks(params["assigned_stocks"]),
-      wish_stocks: parse_wish_stocks(params["wish_stocks"])
+  @spec wallet_from_map(nil | maybe_improper_list() | map()) :: InvestmentWallet.Core.Wallet.t()
+  def wallet_from_map(%{"assigned_stocks" => _, "wish_stocks" => _} = params) do
+    {:ok, %Wallet{
+        name: params["name"],
+        assigned_stocks: parse_stocks(params["assigned_stocks"]),
+        wish_stocks: parse_wish_stocks(params["wish_stocks"])
+      }
     }
+  end
+
+  def wallet_from_map(_params) do
+    {:error, "some field of wallet is messed, please verified to send assigned_stocks and wish_stocks"}
   end
 
   defp parse_stocks(stocks_params) do
     Enum.map(stocks_params, fn stock ->
       %Stock{
         name: stock["name"],
-        code: stock["code"],
-        current_price_cents: String.to_integer(stock["current_price_cents"])
+        code: stock["code"]
       }
     end)
   end
