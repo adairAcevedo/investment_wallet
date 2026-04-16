@@ -194,7 +194,7 @@ defmodule InvestmentWallet.Core.Investment do
   end
 
   def wallet_from_map(_params) do
-    {:error, "some field of wallet is messed, please verified to send assigned_stocks and wish_stocks"}
+    {:error, "some field of wallet are missed, please verified to send assigned_stocks and wish_stocks"}
   end
 
   defp parse_stocks(stocks_params) do
