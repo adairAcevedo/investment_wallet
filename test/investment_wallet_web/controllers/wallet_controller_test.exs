@@ -74,5 +74,23 @@ defmodule InvestmentWalletWeb.WalletControllerTest do
       assert response["message"] == "wish_stocks_empty"
 
     end
+
+    test "returns error when wish_stocks not send", %{conn: conn} do
+      invalid_payload = %{
+        "wallet" => %{
+          "name" => "My Wallet",
+          "assigned_stocks" => mock_assigned_stocks()
+        }
+      }
+
+      response =
+        conn
+        |> post(~p"/api/rebalance", invalid_payload)
+        |> json_response(400)
+
+      assert response["status"] == "error"
+      assert response["message"] == "some field of wallet are missed, please verified to send assigned_stocks and wish_stocks"
+
+    end
   end
 end
