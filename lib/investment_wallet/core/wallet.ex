@@ -27,11 +27,6 @@ defmodule InvestmentWallet.Core.Wallet do
     to_buy_stocks: [entry()],
     balance_cents: integer()
   }
-
-  @derive {Jason.Encoder, only: [:name, :assigned_stocks, :wish_stocks, :to_sell_stocks,
-            :to_buy_stocks,
-            :balance_cents]}
-
   defstruct name: "",
             assigned_stocks: [],
             wish_stocks: [],

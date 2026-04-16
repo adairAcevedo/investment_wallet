@@ -16,6 +16,6 @@ defmodule InvestmentWallet.Core.WishStock do
     code: String.t(),
     stock: %Stock{}
   }
-  @derive {Jason.Encoder, only: [:percentaje, :code, :stock]}
+
   defstruct percentaje: 0, code: "", stock: %Stock{}
 end

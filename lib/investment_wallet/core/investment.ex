@@ -116,7 +116,7 @@ defmodule InvestmentWallet.Core.Investment do
 
     end)
 
-    Map.merge(wallet, %{wish_stocks: wish_stocks_with_price, to_sell_stocks: distribute.to_sell_stocks, to_buy_stocks: distribute.to_buy_stocks})
+    Map.merge(wallet, %{wish_stocks: wish_stocks_with_price, to_sell_stocks: distribute.to_sell_stocks, to_buy_stocks: distribute.to_buy_stocks, assigned_stocks: set_price_stocks(wallet.assigned_stocks)})
   end
 
   @doc """
@@ -139,6 +139,14 @@ defmodule InvestmentWallet.Core.Investment do
     |> Enum.sort_by(&(&1.stock.current_price_cents), :desc)
   end
 
+  @spec set_price_stocks(list()) :: list()
+  def set_price_stocks(stocks) do
+    db_stocks = load_stocks()
+    Enum.map(stocks, fn stock ->
+      stock_find = Enum.find(db_stocks, fn db_stock -> db_stock.code == stock.code end)
+      Map.put(stock, :current_price_cents, stock_find.current_price_cents)
+    end)
+  end
 
   @doc """
   The current portfolio balance is calculated to obtain the future amount available after selling

@@ -12,6 +12,6 @@ defmodule InvestmentWallet.Core.Stock do
     code: String.t(),
     current_price_cents: integer()
   }
-  @derive {Jason.Encoder, only: [:name, :code, :current_price_cents]}
+
   defstruct name: "", code: "", current_price_cents: 0
 end
