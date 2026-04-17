@@ -35,3 +35,6 @@ investment_wallet-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.aider*
+
+.env

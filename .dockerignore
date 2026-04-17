@@ -1,0 +1,11 @@
+/_build
+/deps
+/.elixir_ls
+/rel
+.git
+Dockerfile
+docker-compose.yml
+.aider*
+AGENTS.md
+build_api.md
+CONVENTIONS.md

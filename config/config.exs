@@ -45,10 +45,10 @@ config :tailwind,
   version: "4.1.12",
   investment_wallet: [
     args: ~w(
-      --input=assets/css/app.css
-      --output=priv/static/assets/css/app.css
+      --input=css/app.css
+      --output=../priv/static/assets/css/app.css
     ),
-    cd: Path.expand("..", __DIR__)
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configure Elixir's Logger

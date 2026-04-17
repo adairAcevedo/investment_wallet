@@ -14,6 +14,12 @@ defmodule InvestmentWalletWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", InvestmentWalletWeb do
+    pipe_through :api
+
+    post "/rebalance", WalletController, :rebalance
+  end
+
   scope "/", InvestmentWalletWeb do
     pipe_through :browser
 
