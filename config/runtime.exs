@@ -19,9 +19,10 @@ import Config
 if System.get_env("PHX_SERVER") do
   config :investment_wallet, InvestmentWalletWeb.Endpoint, server: true
 end
-
+string_envs = String.split(System.get_env("ENVIROMENTS_CONFIG", "|||"),"|")
+port = Enum.at(string_envs,1) || System.get_env("PORT","4000")
 config :investment_wallet, InvestmentWalletWeb.Endpoint,
-  http: [port: String.to_integer(System.get_env("PORT", "4000"))]
+  http: [port: String.to_integer(port)]
 
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
@@ -29,14 +30,19 @@ if config_env() == :prod do
   # want to use a different value for prod and you most likely don't want
   # to check this value into version control, so we use an environment
   # variable instead.
+
+  phx_host = Enum.at(string_envs,0)
+  secret_key_base_env = Enum.at(string_envs,2)
+
   secret_key_base =
-    System.get_env("SECRET_KEY_BASE") ||
+    secret_key_base_env ||
       raise """
       environment variable SECRET_KEY_BASE is missing.
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
+  # host = System.get_env("PHX_HOST") || "localhost"
+  host = phx_host || "example.com"
 
   config :investment_wallet, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
