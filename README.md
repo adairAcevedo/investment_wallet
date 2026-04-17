@@ -1,12 +1,5 @@
 # InvestmentWallet Rebalancer (Phoenix/Elixir)
-
-To start your Phoenix server:
-
-* Run `mix setup` to install and setup dependencies
-* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
+**Live Demo** https://investment-wallet.onrender.com/api/rebalance
 
 ## Overview
 
@@ -68,6 +61,18 @@ This project demonstrates how to model and solve this problem using functional p
 
 
 ---
+
+## Setup
+
+
+To start your Phoenix server:
+
+* Run `mix setup` to install and setup dependencies
+* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+https://investment-wallet.onrender.com/
+
 
 ## Features
 
@@ -166,7 +171,7 @@ iex investment.exs
 ### Request
 ```bash
 curl --request POST \
-  --url http://localhost:4000/api/rebalance \
+  --url https://investment-wallet.onrender.com/api/rebalance \
   --header 'Content-Type: application/json' \
   --data '{
   "wallet": {
