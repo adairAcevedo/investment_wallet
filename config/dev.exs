@@ -19,6 +19,33 @@ config :investment_wallet, InvestmentWalletWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:investment_wallet, ~w(--watch)]}
   ]
 
+string_envs = String.split(System.get_env("ENVIROMENTS_CONFIG", "|||"),"|")
+# port = Enum.at(string_envs, 1) || System.get_env("PORT","4000")
+pool_size = Enum.at(string_envs, 3) #|| System.get_env("DB_POOL", 10)
+db_user_name = Enum.at(string_envs, 4) #|| System.get_env("DB_USERNAME","")
+db_password = Enum.at(string_envs, 5) #|| System.get_env("DB_PASSWORD","")
+db_hostname = Enum.at(string_envs, 6) #|| System.get_env("DATABASE_HOST","")
+db_database = Enum.at(string_envs, 7) #|| System.get_env("DATABASE_DB_NAME","")
+# db_maybe_ipv6 = Enum.at(string_envs, 8) #|| System.get_env("DB_MAYBE_IPV6",false)
+
+db_url = "ecto://#{db_user_name}:#{db_password}@#{db_hostname}/#{db_database}"
+
+  database_url = if(String.length(db_url) > 11, do: db_url, else:
+      raise """
+      environment variable DATABASE_URL is missing.
+      For example: ecto://USER:PASS@HOST/DATABASE
+      """)
+
+config :investment_wallet, InvestmentWallet.Repo,
+  # username: System.get_env("DATABASE_USER"),
+  # password: System.get_env("DATABASE_PASSWORD"),
+  # hostname: System.get_env("DATABASE_HOST"),
+  # database: System.get_env("DATABASE_DB_NAME"),
+  url: database_url,
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

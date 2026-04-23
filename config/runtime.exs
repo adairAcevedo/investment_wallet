@@ -20,11 +20,34 @@ if System.get_env("PHX_SERVER") do
   config :investment_wallet, InvestmentWalletWeb.Endpoint, server: true
 end
 string_envs = String.split(System.get_env("ENVIROMENTS_CONFIG", "|||"),"|")
-port = Enum.at(string_envs,1) || System.get_env("PORT","4000")
+port = Enum.at(string_envs, 1) || System.get_env("PORT","4000")
+
 config :investment_wallet, InvestmentWalletWeb.Endpoint,
   http: [port: String.to_integer(port)]
 
 if config_env() == :prod do
+  pool_size = String.to_integer(Enum.at(string_envs, 3) || "10")
+  db_user_name = Enum.at(string_envs, 4)
+  db_password = Enum.at(string_envs, 5)
+  db_hostname = Enum.at(string_envs, 6)
+  db_database = Enum.at(string_envs, 7)
+  db_maybe_ipv6 = Enum.at(string_envs, 8)
+  db_url = "ecto://#{db_user_name}:#{db_password}@#{db_hostname}/#{db_database}"
+
+  database_url = if(String.length(db_url) > 11, do: db_url, else:
+      raise """
+      environment variable DATABASE_URL is missing.
+      For example: ecto://USER:PASS@HOST/DATABASE
+      """)
+
+  maybe_ipv6 = if db_maybe_ipv6 in ~w(true 1), do: [:inet6], else: []
+
+  config :api, Api.Repo,
+    ssl: true,
+    url: database_url,
+    pool_size: pool_size,
+    socket_options: maybe_ipv6
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want

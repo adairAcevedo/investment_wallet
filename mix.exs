@@ -63,7 +63,9 @@ defmodule InvestmentWallet.MixProject do
       {:decimal, "~> 2.1"},
       {:jason, "~> 1.4"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:ecto_sql, "~> 3.11"},
+      {:postgrex, ">= 0.0.0"}
     ]
   end
 
@@ -75,7 +77,10 @@ defmodule InvestmentWallet.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["compile", "tailwind investment_wallet", "esbuild investment_wallet"],
       "assets.deploy": [

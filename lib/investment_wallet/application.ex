@@ -11,6 +11,7 @@ defmodule InvestmentWallet.Application do
       InvestmentWalletWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:investment_wallet, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: InvestmentWallet.PubSub},
+      InvestmentWallet.Repo,
       # Start a worker by calling: InvestmentWallet.Worker.start_link(arg)
       # {InvestmentWallet.Worker, arg},
       # Start to serve requests, typically the last entry

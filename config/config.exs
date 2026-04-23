@@ -8,6 +8,10 @@
 import Config
 
 config :investment_wallet,
+  ecto_repos: [InvestmentWallet.Repo],
+  generators: [timestamp_type: :utc_datetime]
+
+config :investment_wallet,
   generators: [timestamp_type: :utc_datetime]
 
 # Configure the endpoint
