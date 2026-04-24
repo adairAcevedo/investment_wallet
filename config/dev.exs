@@ -26,8 +26,16 @@ db_password = Enum.at(string_envs, 5)
 db_hostname = Enum.at(string_envs, 6)
 db_database = Enum.at(string_envs, 7)
 
+redis_host = Enum.at(string_envs, 9)
+  redis_port = Enum.at(string_envs, 10)
+  redis_password = Enum.at(string_envs, 11)
 
-db_url = "ecto://#{db_user_name}:#{db_password}@#{db_hostname}/#{db_database}"
+config :investment_wallet, :redis,
+    host: redis_host || "localhost",
+    password: redis_password || "redisPassword",
+    port: String.to_integer(redis_port || "6379")
+
+db_url = "ecto://#{db_user_name || "postgres"}:#{db_password || "postgres"}@#{db_hostname || "localhost:5432"}/#{db_database || "investment_wallet"}"
 
   database_url = if(String.length(db_url) > 11, do: db_url, else:
       raise """

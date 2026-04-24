@@ -32,6 +32,10 @@ if config_env() == :prod do
   db_hostname = Enum.at(string_envs, 6)
   db_database = Enum.at(string_envs, 7)
   db_maybe_ipv6 = Enum.at(string_envs, 8)
+
+  redis_host = Enum.at(string_envs, 9)
+  redis_port = Enum.at(string_envs, 10)
+  redis_password = Enum.at(string_envs, 11)
   db_url = "ecto://#{db_user_name}:#{db_password}@#{db_hostname}/#{db_database}"
 
   database_url = if(String.length(db_url) > 11, do: db_url, else:
@@ -80,6 +84,10 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :investment_wallet, :redis,
+    host: redis_host, #System.get_env("REDIS_HOST") || "localhost",
+    password: redis_password,
+    port: String.to_integer(redis_port || "6379") #String.to_integer(System.get_env("REDIS_PORT") || "6379")
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key

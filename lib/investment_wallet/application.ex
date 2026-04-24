@@ -7,6 +7,8 @@ defmodule InvestmentWallet.Application do
 
   @impl true
   def start(_type, _args) do
+    config = Application.get_env(:investment_wallet, :redis)
+
     children = [
       InvestmentWalletWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:investment_wallet, :dns_cluster_query) || :ignore},
@@ -15,7 +17,8 @@ defmodule InvestmentWallet.Application do
       # Start a worker by calling: InvestmentWallet.Worker.start_link(arg)
       # {InvestmentWallet.Worker, arg},
       # Start to serve requests, typically the last entry
-      InvestmentWalletWeb.Endpoint
+      InvestmentWalletWeb.Endpoint,
+      {Redix, name: :redix, host: config[:host], port: config[:port], password: config[:password]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

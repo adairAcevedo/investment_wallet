@@ -65,7 +65,8 @@ defmodule InvestmentWallet.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:ecto_sql, "~> 3.11"},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:redix, "~> 1.1"},
     ]
   end
 
