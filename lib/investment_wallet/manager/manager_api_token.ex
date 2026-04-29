@@ -15,6 +15,13 @@ defmodule InvestmentWallet.Manager.ManagerApiToken do
     |> Repo.insert!()
   end
 
+  def decrypt_token(token) do
+    case Base.decode64(token) do
+      {:ok, token_decode} -> {:ok, token_decode}
+      _ -> {:error, token}
+    end
+  end
+
   def get_api_token(key_hash) do
     Repo.get(ApiToken, key_hash)
   end
