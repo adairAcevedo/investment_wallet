@@ -15,6 +15,11 @@ config :investment_wallet, InvestmentWalletWeb.Endpoint,
   secret_key_base: "lVU3ljID87GyEoo0ltt+JKBWq1Glcj8OsC82gB2QaEvlny77+y9rAMVigNgrfiX3",
   server: false
 
+config :investment_wallet, :redis,
+  host: "localhost",
+  password: "redisPassword",
+  port: 6379
+
 # In test we don't send emails
 config :investment_wallet, InvestmentWallet.Mailer, adapter: Swoosh.Adapters.Test
 
